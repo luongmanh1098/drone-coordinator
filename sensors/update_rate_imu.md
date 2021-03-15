@@ -1,5 +1,7 @@
 Based on [issue](https://github.com/mavlink/mavros/issues/1346)
 
+# Adjust imu rate through application
+
 Download [QGroundControl](https://docs.qgroundcontrol.com/master/en/getting_started/download_and_install.html)
 ```
 sudo usermod -a -G dialout $USER
@@ -30,4 +32,13 @@ cd /fs/microsd/etc
 rm extras.txt
 echo "mavlink stream -d /dev/ttyACM0 -s HIGHRES_IMU -r 100" > extras.txt
 ```
+Note:
+On PX4, its only effects topic: /mavros/imu/data_raw. If you want to update rate on topic /mavros/imu/data too, you need to add all these line (recommend):
+```
+mavlink stream -d / dev / ttyACM0 -s ATTITUDE -r 100
+mavlink stream -d / dev / ttyACM0 -s ATTITUDE_QUATERNION -r 100
+mavlink stream -d / dev / ttyACM0 -s HIGHRES_IMU -r 100
+```
+# Adjust imu rate through sd card
 
+You can easily config extras.txt through sd card. Just remove sd card from px4 and insert into your laptop. After, you can modify extras.txt file.
